@@ -1,16 +1,19 @@
 from PIL import Image
 
-# Load Roblox template
+# roblox to polytoria shirt
+
+# load the template
+
 roblox_img = Image.open("input.png").convert("RGBA")
 
-# Create Polytoria canvas
+# create canvas for polytoria
+
 poly_img = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
 
-extrasize = 2  # how much to expand each face to remove gaps
+extrasize = 2  # this expands each piece to remove any gaps (2 is probably best)
 
-# -----------------------------
-# ROBLOX COORDS (top-left x,y and bottom-right x,y)
-# -----------------------------
+# roblox positions (topleftX, topleftY, bottomrightX, bottomrightY)
+
 TORSO_ROBLOX = {
     "front":  (231, 74, 358, 201),
     "back":   (427, 74, 554, 201),
@@ -38,9 +41,8 @@ RIGHT_ARM_ROBLOX = {
     "bottom": (217, 485, 280, 548),
 }
 
-# -----------------------------
-# POLYTORIA COORDS (top-left x,y and bottom-right x,y)
-# -----------------------------
+# polytoria positions (topleftX, topleftY, bottomrightX, bottomrightY)
+
 TORSO_POLY = {
     "front":  (439, 103, 584, 392),
     "back":   (439, 519, 584, 808),
@@ -68,40 +70,43 @@ RIGHT_ARM_POLY = {
     "bottom": (204, 361, 269, 424),
 }
 
-# -----------------------------
-# FUNCTION TO APPLY extrasize
-# -----------------------------
+# apply extra size
+
 def expand_coords(coords, extrasize):
     x1, y1, x2, y2 = coords
     return (x1 - extrasize, y1 - extrasize, x2 + extrasize, y2 + extrasize)
 
-# -----------------------------
-# FUNCTION TO PROCESS A PART
-# -----------------------------
+# process the piece
+
 def transfer_part(roblox_coords, poly_coords, part_name):
     for face in roblox_coords:
-        # Crop from Roblox
+        
+        # crop roblox piece
+
         crop = roblox_img.crop(roblox_coords[face])
         
-        # Expand target coordinates to remove gaps
+        # expand piece
+
         target_coords = expand_coords(poly_coords[face], extrasize // 2)
         target_width = target_coords[2] - target_coords[0]
         target_height = target_coords[3] - target_coords[1]
         
-        # Resize
+        # resize
+
         resized = crop.resize((target_width, target_height), Image.NEAREST)
         
-        # Paste into Polytoria canvas
+        # paste
+
         poly_img.paste(resized, (target_coords[0], target_coords[1]))
         print(f"✅ {part_name} {face} converted.")
 
-# -----------------------------
-# PROCESS ALL PARTS
-# -----------------------------
+# process all parts
+
 transfer_part(TORSO_ROBLOX, TORSO_POLY, "Torso")
 transfer_part(LEFT_ARM_ROBLOX, LEFT_ARM_POLY, "Left Arm")
 transfer_part(RIGHT_ARM_ROBLOX, RIGHT_ARM_POLY, "Right Arm")
 
-# Save final output
+# save output
+
 poly_img.save("output.png")
-print("🎉 All parts converted successfully!")
+print("done converting parts")
