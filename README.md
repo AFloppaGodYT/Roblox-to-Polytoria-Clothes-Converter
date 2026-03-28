@@ -5,6 +5,7 @@ converts roblox clothes to polytoria ones
 note to polytoria devs: you can use this however you like just make sure to credit me if possible
 
 guide:
+extract roblox shirt or pants (id recommend this site for that: https://thecsdev.com/tool/roblox-tools/)
 put a png named "input" of either roblox pants or roblox shirt,
 run the respective script,
 output file is your converted version,
