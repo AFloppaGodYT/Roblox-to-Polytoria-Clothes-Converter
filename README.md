@@ -14,3 +14,5 @@ please when uploading make sure to credit the original creators.
 
 polytoria account: https://polytoria.com/u/AFloppaGod
 roblox account: https://www.roblox.com/users/1548705398/profile
+
+this was mainly made with chatgpt other than me mapping all the positions (took me FOREVER) bc idk python only lua
